@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="hi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quora Hindi Pro</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        width: 420px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 550px;
+      }
+
+      .container {
+        padding: 12px;
+      }
+
+      .header {
+        text-align: center;
+        color: white;
+        margin-bottom: 12px;
+      }
+
+      .header h1 {
+        font-size: 16px;
+        margin-bottom: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .header p {
+        font-size: 11px;
+        opacity: 0.9;
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-size: 10px;
+        background: #38ef7d;
+        color: #000;
+      }
+
+      .status-badge.warning {
+        background: #ffc107;
+      }
+
+      .status-badge.error {
+        background: #dc3545;
+        color: white;
+      }
+
+      .card {
+        background: white;
+        border-radius: 10px;
+        padding: 12px;
+        margin-bottom: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+
+      .card-title .icon {
+        font-size: 14px;
+      }
+
+      .form-group {
+        margin-bottom: 10px;
+      }
+
+      .form-group:last-child {
+        margin-bottom: 0;
+      }
+
+      label {
+        display: block;
+        font-size: 11px;
+        color: #666;
+        margin-bottom: 4px;
+      }
+
+      input[type="number"],
+      input[type="text"],
+      input[type="password"],
+      select,
+      textarea {
+        width: 100%;
+        padding: 8px 10px;
+        border: 2px solid #e0e0e0;
+        border-radius: 6px;
+        font-size: 12px;
+        transition: border-color 0.3s;
+      }
+
+      textarea {
+        min-height: 60px;
+        resize: vertical;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      .range-group {
+        display: flex;
+        gap: 8px;
+      }
+
+      .range-group > div {
+        flex: 1;
+      }
+
+      .btn {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .btn-success {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        color: white;
+      }
+
+      .btn-danger {
+        background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+        color: white;
+      }
+
+      .btn-warning {
+        background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+        color: #333;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none !important;
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 8px;
+      }
+
+      .btn-group .btn {
+        flex: 1;
+      }
+
+      .btn-small {
+        padding: 4px 10px;
+        font-size: 10px;
+        border: 1px solid #667eea;
+        background: white;
+        color: #667eea;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-left: 5px;
+      }
+
+      .btn-small:hover {
+        background: #667eea;
+        color: white;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+        margin-top: 8px;
+      }
+
+      .stat-item {
+        background: #f8f9fa;
+        padding: 8px 5px;
+        border-radius: 6px;
+        text-align: center;
+      }
+
+      .stat-value {
+        font-size: 18px;
+        font-weight: 700;
+        color: #667eea;
+      }
+
+      .stat-label {
+        font-size: 9px;
+        color: #666;
+        margin-top: 2px;
+      }
+
+      .progress-container {
+        display: none;
+        margin-top: 8px;
+      }
+
+      .progress-bar {
+        height: 6px;
+        background: #e0e0e0;
+        border-radius: 3px;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        width: 0%;
+        transition: width 0.3s;
+      }
+
+      .progress-text {
+        font-size: 10px;
+        color: #666;
+        text-align: center;
+        margin-top: 4px;
+      }
+
+      .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .checkbox-group input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+        cursor: pointer;
+      }
+
+      .checkbox-group label {
+        margin-bottom: 0;
+        cursor: pointer;
+        font-size: 11px;
+      }
+
+      .status-message {
+        padding: 8px;
+        border-radius: 6px;
+        font-size: 11px;
+        text-align: center;
+        margin-top: 8px;
+        display: none;
+      }
+
+      .status-success {
+        background: #d4edda;
+        color: #155724;
+      }
+      .status-error {
+        background: #f8d7da;
+        color: #721c24;
+      }
+      .status-info {
+        background: #d1ecf1;
+        color: #0c5460;
+      }
+      .status-warning {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      .loader {
+        width: 16px;
+        height: 16px;
+        border: 2px solid #ffffff;
+        border-top-color: transparent;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .tab-container {
+        display: flex;
+        margin-bottom: 12px;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 8px;
+        padding: 3px;
+      }
+
+      .tab {
+        flex: 1;
+        padding: 8px 5px;
+        background: transparent;
+        color: white;
+        text-align: center;
+        cursor: pointer;
+        font-size: 10px;
+        transition: all 0.3s;
+        border-radius: 6px;
+      }
+
+      .tab.active {
+        background: white;
+        color: #667eea;
+        font-weight: 600;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .question-queue {
+        max-height: 200px;
+        overflow-y: auto;
+        margin-top: 8px;
+      }
+
+      .queue-item {
+        padding: 8px;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        margin-bottom: 6px;
+        font-size: 11px;
+      }
+
+      .queue-item.pending {
+        border-left: 3px solid #ffc107;
+      }
+      .queue-item.processing {
+        border-left: 3px solid #17a2b8;
+        background: #f0f9ff;
+      }
+      .queue-item.completed {
+        border-left: 3px solid #28a745;
+      }
+      .queue-item.failed {
+        border-left: 3px solid #dc3545;
+      }
+
+      .queue-title {
+        font-weight: 600;
+        margin-bottom: 4px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .queue-meta {
+        display: flex;
+        justify-content: space-between;
+        color: #888;
+        font-size: 10px;
+      }
+
+      .score-badge {
+        display: inline-block;
+        padding: 2px 6px;
+        border-radius: 10px;
+        font-size: 9px;
+        font-weight: 600;
+      }
+
+      .score-high {
+        background: #d4edda;
+        color: #155724;
+      }
+      .score-medium {
+        background: #fff3cd;
+        color: #856404;
+      }
+      .score-low {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .answer-preview {
+        background: #f8f9fa;
+        border-radius: 6px;
+        padding: 10px;
+        margin-top: 8px;
+        font-size: 11px;
+        max-height: 150px;
+        overflow-y: auto;
+        white-space: pre-wrap;
+      }
+
+      .column-category {
+        margin-bottom: 10px;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        padding: 8px;
+      }
+
+      .category-header {
+        font-size: 10px;
+        font-weight: 600;
+        color: #667eea;
+        margin-bottom: 6px;
+        padding-bottom: 4px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .column-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 4px;
+      }
+
+      .column-grid .form-group {
+        margin-bottom: 2px;
+      }
+
+      .column-grid label {
+        font-size: 9px;
+      }
+
+      .api-key-input {
+        position: relative;
+      }
+
+      .api-key-input input {
+        padding-right: 35px;
+      }
+
+      .toggle-visibility {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      .template-select {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+        margin-top: 8px;
+      }
+
+      .template-option {
+        padding: 8px;
+        border: 2px solid #e0e0e0;
+        border-radius: 6px;
+        text-align: center;
+        cursor: pointer;
+        font-size: 10px;
+        transition: all 0.3s;
+      }
+
+      .template-option:hover {
+        border-color: #667eea;
+      }
+
+      .template-option.selected {
+        border-color: #667eea;
+        background: #f0f4ff;
+      }
+
+      .template-option .icon {
+        font-size: 18px;
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .delay-info {
+        background: #fff3cd;
+        padding: 8px;
+        border-radius: 6px;
+        font-size: 10px;
+        color: #856404;
+        margin-top: 8px;
+      }
+
+      .live-log {
+        background: #1a1a2e;
+        color: #0f0;
+        padding: 8px;
+        border-radius: 6px;
+        font-family: monospace;
+        font-size: 10px;
+        max-height: 120px;
+        overflow-y: auto;
+        margin-top: 8px;
+      }
+
+      .log-entry {
+        margin-bottom: 3px;
+        opacity: 0.9;
+      }
+
+      .log-entry.error {
+        color: #ff6b6b;
+      }
+      .log-entry.success {
+        color: #51cf66;
+      }
+      .log-entry.info {
+        color: #74c0fc;
+      }
+      .log-entry.warning {
+        color: #fcc419;
+      }
+
+      .slider-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .slider-container input[type="range"] {
+        flex: 1;
+      }
+
+      .slider-value {
+        min-width: 40px;
+        text-align: center;
+        font-weight: 600;
+        color: #667eea;
+      }
+
+      .persona-card {
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .persona-card:hover,
+      .persona-card.selected {
+        border-color: #667eea;
+        background: #f8f9ff;
+      }
+
+      .persona-name {
+        font-weight: 600;
+        font-size: 12px;
+        margin-bottom: 4px;
+      }
+
+      .persona-desc {
+        font-size: 10px;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>
+          🚀 क्वोरा हिंदी प्रो
+          <span class="status-badge" id="apiStatus">API Not Set</span>
+        </h1>
+        <p>Smart Scraper & AI Auto-Answer System</p>
+      </div>
+
+      <div class="tab-container">
+        <div class="tab active" data-tab="scrape">📥 स्क्रैप</div>
+        <div class="tab" data-tab="analyze">📊 विश्लेषण</div>
+        <div class="tab" data-tab="answer">✍️ आंसर</div>
+        <div class="tab" data-tab="settings">⚙️ सेटिंग्स</div>
+      </div>
+
+      <!-- ==================== SCRAPE TAB ==================== -->
+      <div class="tab-content active" id="tab-scrape">
+        <div class="card">
+          <div class="card-title">
+            <span class="icon">📄</span>
+            स्क्रैप सेटिंग्स / Scrape Settings
+          </div>
+
+          <div class="range-group">
+            <div class="form-group">
+              <label>पेज की संख्या / Pages</label>
+              <input type="number" id="pageCount" value="3" min="1" max="20" />
+            </div>
+            <div class="form-group">
+              <label>स्क्रॉल डिले (ms)</label>
+              <input
+                type="number"
+                id="scrollDelay"
+                value="2000"
+                min="1000"
+                max="10000"
+                step="500"
+              />
+            </div>
+          </div>
+
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="autoScroll" checked />
+            <label for="autoScroll">ऑटो स्क्रॉल / Auto Scroll</label>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span class="icon">🎯</span>
+            कंट्रोल्स / Controls
+          </div>
+
+          <div class="btn-group">
+            <button class="btn btn-primary" id="btnScrape">
+              <span>🚀 स्क्रैप शुरू करें</span>
+            </button>
+            <button class="btn btn-danger" id="btnStop" disabled>
+              <span>⏹️ रोकें</span>
+            </button>
+          </div>
+
+          <button class="btn btn-warning" id="btnClear">
+            <span>🗑️ डेटा साफ़ करें</span>
+          </button>
+
+          <div class="progress-container" id="progressContainer">
+            <div class="progress-bar">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">0% पूर्ण</div>
+          </div>
+
+          <div class="stats">
+            <div class="stat-item">
+              <div class="stat-value" id="totalQuestions">0</div>
+              <div class="stat-label">कुल प्रश्न</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="highPotential">0</div>
+              <div class="stat-label">हाई पोटेंशियल</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="unansweredCount">0</div>
+              <div class="stat-label">अनुत्तरित</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="answeredCount">0</div>
+              <div class="stat-label">उत्तरित</div>
+            </div>
+          </div>
+
+          <div class="status-message" id="statusMessage"></div>
+        </div>
+      </div>
+
+      <!-- ==================== ANALYZE TAB ==================== -->
+      <div class="tab-content" id="tab-analyze">
+        <div class="card">
+          <div class="card-title">
+            <span class="icon">🎯</span>
+            प्रश्न चयन / Question Selection
+          </div>
+
+          <div class="form-group">
+            <label>न्यूनतम एंगेजमेंट स्कोर / Min Engagement Score</label>
+            <div class="slider-container">
+              <input
+                type="range"
+                id="minEngagement"
+                min="0"
+                max="100"
+                value="10"
+              />
+              <span class="slider-value" id="minEngagementValue">10</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>फॉलोअर रेंज / Follower Range</label>
+            <div class="range-group">
+              <input type="number" id="minFollowersFilter" value="1" min="0" />
+              <input
+                type="number"
+                id="maxFollowersFilter"
+                value="100"
+                min="0"
+              />
+            </div>
+          </div>
+
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="preferUnanswered" checked />
+            <label for="preferUnanswered"
+              >अनुत्तरित को प्राथमिकता / Prefer Unanswered</label
+            >
+          </div>
+
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="preferHindi" checked />
+            <label for="preferHindi"
+              >हिंदी/हिंग्लिश प्राथमिकता / Prefer Hindi</label
+            >
+          </div>
+
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="avoidCompetitive" />
+            <label for="avoidCompetitive"
+              >ज्यादा जवाब वाले छोड़ें (>10) / Skip High Competition</label
+            >
+          </div>
+
+          <button class="btn btn-primary" id="btnAnalyze">
+            <span>🔍 विश्लेषण करें / Analyze</span>
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span class="icon">📋</span>
+            टॉप प्रश्न / Top Questions
+            <span class="btn-small" id="selectTop5">टॉप 5 चुनें</span>
+            <span class="btn-small" id="selectTop10">टॉप 10 चुनें</span>
+          </div>
+
+          <div class="question-queue" id="questionQueue">
+            <div style="text-align: center; color: #888; padding: 20px">
+              पहले स्क्रैप करें / Scrape questions first
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== ANSWER TAB ==================== -->
+      <div class="tab-content" id="tab-answer">
+        <div class="card">
+          <div class="card-title">
+            <span class="icon">✍️</span>
+            आंसर सेटिंग्स / Answer Settings
+          </div>
+
+          <div class="form-group">
+            <label>आंसर की संख्या / Number of Answers</label>
+            <input type="number" id="answerCount" value="5" min="1" max="20" />
+          </div>
+
+          <div class="form-group">
+            <label>आंसर के बीच डिले (सेकंड) / Delay Between Answers</label>
+            <div class="range-group">
+              <div>
+                <label>Min</label>
+                <input
+                  type="number"
+                  id="minDelay"
+                  value="60"
+                  min="30"
+                  max="300"
+                />
+              </div>
+              <div>
+                <label>Max</label>
+                <input
+                  type="number"
+                  id="maxDelay"
+                  value="180"
+                  min="60"
+                  max="600"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="delay-info">
+            ⚠️ सुरक्षा के लिए, आंसर के बीच रैंडम डिले होगा (60-180 सेकंड)। यह
+            Quora की पहचान से बचने में मदद करता है।
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span class="icon">🎭</span>
+            आंसर स्टाइल / Answer Style
+          </div>
+
+          <div class="template-select" id="answerStyleSelect">
+            <div class="template-option selected" data-style="expert">
+              <span class="icon">👨‍🏫</span>
+              <span>Expert</span>
+            </div>
+            <div class="template-option" data-style="friendly">
+              <span class="icon">😊</span>
+              <span>Friendly</span>
+            </div>
+            <div class="template-option" data-style="storyteller">
+              <span class="icon">📖</span>
+              <span>Storyteller</span>
+            </div>
+            <div class="template-option" data-style="practical">
+              <span class="icon">💡</span>
+              <span>Practical</span>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top: 10px">
+            <label>आंसर की लंबाई / Answer Length</label>
+            <select id="answerLength">
+              <option value="short">छोटा / Short (100-150 words)</option>
+              <option value="medium" selected>
+                मध्यम / Medium (200-300 words)
+              </option>
+              <option value="long">लंबा / Long (400-500 words)</option>
+            </select>
+          </div>
+
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="includeHook" checked />
+            <label for="includeHook">🎣 हुक शामिल करें / Include Hook</label>
+          </div>
+
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="includeCTA" checked />
+            <label for="includeCTA">📢 CTA शामिल करें (Follow/Upvote)</label>
+          </div>
+
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="includeEmoji" checked />
+            <label for="includeEmoji"
+              >😀 इमोजी शामिल करें / Include Emoji</label
+            >
+          </div>
+
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="seoOptimize" checked />
+            <label for="seoOptimize">🔍 SEO ऑप्टिमाइज़ / SEO Optimize</label>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span class="icon">🚀</span>
+            ऑटो आंसर / Auto Answer
+          </div>
+
+          <div class="btn-group">
+            <button class="btn btn-success" id="btnStartAnswering">
+              <span>▶️ आंसर शुरू करें</span>
+            </button>
+            <button class="btn btn-danger" id="btnStopAnswering" disabled>
+              <span>⏹️ रोकें</span>
+            </button>
+          </div>
+
+          <button class="btn btn-primary" id="btnPreviewAnswer">
+            <span>👁️ आंसर प्रीव्यू करें</span>
+          </button>
+
+          <div class="progress-container" id="answerProgressContainer">
+            <div class="progress-bar">
+              <div class="progress-fill" id="answerProgressFill"></div>
+            </div>
+            <div class="progress-text" id="answerProgressText">
+              0/0 आंसर पूर्ण
+            </div>
+          </div>
+
+          <div
+            class="answer-preview"
+            id="answerPreview"
+            style="display: none"
+          ></div>
+
+          <div class="live-log" id="liveLog">
+            <div class="log-entry info">[System] Ready to start...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== SETTINGS TAB ==================== -->
+      <div class="tab-content" id="tab-settings">
+        <div class="card">
+          <div class="card-title">
+            <span class="icon">🔑</span>
+            Gemini API Settings
+          </div>
+
+          <div class="form-group">
+            <label>Gemini API Key</label>
+            <div class="api-key-input">
+              <input
+                type="password"
+                id="apiKey"
+                placeholder="Enter your Gemini API key"
+              />
+              <button class="toggle-visibility" id="toggleApiKey">👁️</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Model</label>
+            <select id="geminiModel">
+              <option value="gemini-2.5-flash">
+                Gemini 2.5 Flash (Fast & Efficient)
+              </option>
+
+              <option value="gemini-2.5-pro">
+                Gemini 2.5 Pro (Complex Reasoning)
+              </option>
+
+              <option value="gemini-3.0-pro">
+                Gemini 3.0 Pro (Latest & Most Capable)
+              </option>
+            </select>
+          </div>
+
+          <button class="btn btn-primary" id="btnSaveApi">
+            <span>💾 API Key सेव करें</span>
+          </button>
+
+          <button
+            class="btn btn-success"
+            id="btnTestApi"
+            style="margin-top: 8px"
+          >
+            <span>🧪 API टेस्ट करें</span>
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span class="icon">🎭</span>
+            Author Persona
+          </div>
+
+          <div class="form-group">
+            <label>आपका नाम / Your Name</label>
+            <input
+              type="text"
+              id="authorName"
+              placeholder="e.g., राहुल शर्मा"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>आपका एक्सपर्टाइज / Your Expertise</label>
+            <input
+              type="text"
+              id="authorExpertise"
+              placeholder="e.g., Health Expert, Finance Advisor"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>बायो / Bio (Optional)</label>
+            <textarea
+              id="authorBio"
+              placeholder="Brief description about yourself..."
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span class="icon">🛡️</span>
+            Anti-Detection Settings
+          </div>
+
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="humanTyping" checked />
+            <label for="humanTyping">Human-like Typing Speed</label>
+          </div>
+
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="randomPauses" checked />
+            <label for="randomPauses">Random Pauses</label>
+          </div>
+
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="varyLength" checked />
+            <label for="varyLength">Vary Answer Length ±20%</label>
+          </div>
+
+          <div class="form-group">
+            <label>Daily Answer Limit</label>
+            <input type="number" id="dailyLimit" value="15" min="1" max="50" />
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span class="icon">📤</span>
+            Export Settings
+          </div>
+
+          <div class="form-group">
+            <label>Export Format</label>
+            <select id="exportFormat">
+              <option value="csv">CSV</option>
+              <option value="json">JSON</option>
+            </select>
+          </div>
+
+          <button class="btn btn-success" id="btnExport">
+            <span>📥 Export Data</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

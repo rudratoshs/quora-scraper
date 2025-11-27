@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "Quora Hindi Pro - Scraper & Auto Answer",
+  "name_localized": {
+    "hi": "क्वोरा हिंदी प्रो - स्क्रैपर और ऑटो आंसर"
+  },
+  "version": "2.0.0",
+  "description": "Scrape questions, analyze engagement potential, and auto-generate SEO-friendly answers using AI / हिंदी क्वोरा के लिए स्मार्ट ऑटो-आंसर",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "downloads",
+    "alarms",
+    "notifications"
+  ],
+  "host_permissions": [
+    "https://*.quora.com/*",
+    "https://generativelanguage.googleapis.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.quora.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}
